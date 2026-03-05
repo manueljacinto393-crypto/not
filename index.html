@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SDM Clothing Store</title>
+
+<style>
+
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#0c1f4a,#162e6e);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+padding:20px;
+}
+
+.card{
+background:white;
+width:380px;
+border-radius:16px;
+padding:25px;
+box-shadow:0 15px 35px rgba(0,0,0,0.35);
+}
+
+.title{
+text-align:center;
+font-size:22px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.code-box{
+background:#0b1a3a;
+padding:15px;
+border-radius:10px;
+text-align:center;
+margin-bottom:20px;
+}
+
+.code-box p{
+color:white;
+font-size:13px;
+margin-bottom:10px;
+}
+
+.code-btn{
+background:transparent;
+border:2px solid gold;
+color:gold;
+padding:8px 16px;
+margin:5px;
+border-radius:20px;
+cursor:pointer;
+font-weight:bold;
+}
+
+label{
+font-size:13px;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+margin-bottom:14px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+.size-box{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.size{
+flex:1;
+padding:10px;
+border:2px solid #ddd;
+border-radius:8px;
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+}
+
+.size.active{
+border-color:#0b1a3a;
+background:#0b1a3a;
+color:white;
+}
+
+.colors{
+display:flex;
+gap:12px;
+margin-bottom:15px;
+}
+
+.color{
+width:30px;
+height:30px;
+border-radius:50%;
+cursor:pointer;
+border:2px solid #ccc;
+}
+
+.color.active{
+border:3px solid black;
+}
+
+.total{
+font-weight:bold;
+font-size:18px;
+color:#162e6e;
+margin:10px 0;
+}
+
+.whatsapp{
+background:#25D366;
+color:white;
+border:none;
+width:100%;
+padding:15px;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="title">🛍 SDM CLOTHING STORE</div>
+
+<div class="code-box">
+
+<p>Clica no teu código de compra</p>
+
+<button class="code-btn" onclick="setCode('RCRD404')">RCRD404</button>
+<button class="code-btn" onclick="setCode('ANGL404')">ANGL404</button>
+<button class="code-btn" onclick="setCode('ANGL404')">NILZA404</button>
+
+</div>
+
+<label>Código de Compra</label>
+<input type="text" id="codigo">
+
+<label>Nome</label>
+<input type="text" id="nome">
+
+<label>Sua Localização</label>
+<input type="text" id="local">
+
+<label>Número de Telefone</label>
+<input type="tel" id="telefone">
+
+<label>Produto</label>
+
+<select id="produto" onchange="calcular()">
+
+<option value="750">Camiseta Normal - 750MT</option>
+<option value="1200">Camiseta Oversized - 1200MT</option>
+
+</select>
+
+<label>Tamanho</label>
+
+<div class="size-box">
+
+<div class="size" onclick="setSize(this)">S</div>
+<div class="size" onclick="setSize(this)">M</div>
+<div class="size" onclick="setSize(this)">L</div>
+<div class="size" onclick="setSize(this)">XL</div>
+
+</div>
+
+<label>Cor da Camiseta</label>
+
+<div class="colors">
+
+<div class="color" style="background:black" onclick="setColor(this,'Preta')"></div>
+<div class="color" style="background:white" onclick="setColor(this,'Branca')"></div>
+<div class="color" style="background:red" onclick="setColor(this,'Vermelha')"></div>
+<div class="color" style="background:blue" onclick="setColor(this,'Azul')"></div>
+
+</div>
+
+<label>Quantidade</label>
+<input type="number" id="quantidade" value="1" onchange="calcular()">
+
+<div class="total" id="total">
+Total: 750 MT
+</div>
+
+<button class="whatsapp" onclick="enviar()">
+Enviar Pedido para WhatsApp
+</button>
+
+</div>
+
+<script>
+
+let tamanhoSelecionado=""
+let corSelecionada=""
+
+function setCode(code){
+document.getElementById("codigo").value = code
+}
+
+function setSize(el){
+
+document.querySelectorAll(".size").forEach(s=>s.classList.remove("active"))
+
+el.classList.add("active")
+
+tamanhoSelecionado = el.innerText
+
+}
+
+function setColor(el,cor){
+
+document.querySelectorAll(".color").forEach(c=>c.classList.remove("active"))
+
+el.classList.add("active")
+
+corSelecionada = cor
+
+}
+
+function calcular(){
+
+let preco = document.getElementById("produto").value
+
+let quantidade = document.getElementById("quantidade").value
+
+let total = preco * quantidade
+
+document.getElementById("total").innerHTML = "Total: " + total + " MT"
+
+}
+
+function enviar(){
+
+let codigo = document.getElementById("codigo").value
+let nome = document.getElementById("nome").value
+let local = document.getElementById("local").value
+let telefone = document.getElementById("telefone").value
+let produto = document.getElementById("produto").options[document.getElementById("produto").selectedIndex].text
+let quantidade = document.getElementById("quantidade").value
+let total = document.getElementById("total").innerText
+
+let mensagem = `*NOVO PEDIDO SDM*%0A
+Código: ${codigo}%0A
+Nome: ${nome}%0A
+Localização: ${local}%0A
+Telefone: ${telefone}%0A
+Produto: ${produto}%0A
+Tamanho: ${tamanhoSelecionado}%0A
+Cor: ${corSelecionada}%0A
+Quantidade: ${quantidade}%0A
+${total}`
+
+let numero = "258852370692"
+
+let url = `https://wa.me/${numero}?text=${mensagem}`
+
+window.open(url)
+
+}
+
+</script>
+
+</body>
+</html>
